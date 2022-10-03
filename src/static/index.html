@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/favicon.png"/>
+  <link type="text/css"  rel="stylesheet" href="styles.css">
+  <script src="index.js" async></script>
+  <title>ExFiles</title>
+</head>
+<body>
+  <header>
+    <h1>ExFiles</h1>
+    <nav>
+      <ul>
+        <a href="">
+          <li>Download</li>
+        </a>
+        <li>About</li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Casual file sender</h2>
+    <form action="/files" enctype="multipart/form-data" method="post">
+      <div id="drop-area" >
+        <input type="file" name="newsletter" id="newsletter" multiple accept=".jpeg, .jpg, .png, .doc, .docx, .txt" onchange="handleChange(this.files)"
+        >
+        <label for="newsletter">Choose or drag files</label>
+      </div>
+      <button type="submit">
+        Send
+      </button>
+      <button id="reset" type="button">
+        Reset
+      </button>
+      <div id="img-box"></div>
+    </form>
+  </main>
+  <footer>&copy; bymistake</footer>
+</body>
+</html>
