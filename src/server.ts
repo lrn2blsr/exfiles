@@ -13,6 +13,8 @@ const upload = multer()
 import { archiveFiles } from './archiveFiles'
 import { uploadZipToS3 } from './uploadZipToS3'
 import { handleDownload } from './handleDownload'
+import { saveZipFile } from './saveZipFile'
+import { createReadStream } from 'fs'
 
 const staticFiles = path.join(__dirname, 'static')
 
@@ -30,15 +32,26 @@ app.post('/files', upload.array('newsletter'), async (req, res) => {
 
   try {
     await archiveFiles(req.files as Express.Multer.File[], throughStream)
-    await uploadZipToS3(throughStream)
-    res.status(201).json({ msg: 'Successfully uploaded' })
+    // await uploadZipToS3(throughStream)
+    const result = await saveZipFile(throughStream)
+    if (result) {
+      console.log(result)
+      res.status(201).json({ msg: 'Successfully uploaded' })
+    }
   } catch (error) {
     res.status(500).json({ msg: 'Something went wrong' })
     throw error
   }
 })
 
-app.get('/files', handleDownload)
+// app.get('/files', handleDownload)
+
+app.get('/files', (req, res) => {
+  const filePath = path.join(__dirname, 'files/newsletter.zip')
+  const rs = createReadStream(filePath)
+  res.attachment('newsletter.zip')
+  rs.pipe(res)
+})
 
 app.use('*', (req, res) => {
   res.sendStatus(404).end()
