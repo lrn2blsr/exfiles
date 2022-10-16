@@ -146,3 +146,7 @@ img {
   width: 100%;
   height: auto;
 }
+
+button:disabled {
+  color: black;
+}

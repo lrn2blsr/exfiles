@@ -1,5 +1,6 @@
 const form = document.querySelector('form')
 const dropArea = document.getElementById('drop-area')
+const submitBtn = document.querySelector('[type=submit]')
 const resetBtn = document.getElementById('reset')
 const imgBox = document.getElementById('img-box')
 
@@ -88,6 +89,10 @@ async function handleFormSubmit(ev) {
     method: 'POST',
     body: formData,
   })
+
+  if (!response.ok) {
+    submitBtn.setAttribute('disabled', 'true')
+  }
 
   yieldResult(response.ok)
 }

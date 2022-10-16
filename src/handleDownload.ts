@@ -14,9 +14,8 @@ export async function handleDownload(req: Request, res: Response) {
       Key: 'newsletter.zip',
     })
 
-    const stream = PassThrough.from(s3File.Body!)
     res.attachment('newsletter.zip')
-    stream.pipe(res)
+    PassThrough.from(s3File.Body!).pipe(res)
   } catch (error) {
     if ((error as _Error).Code === 'NoSuchKey') {
       console.log(`No such key`)
